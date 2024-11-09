@@ -27,8 +27,6 @@ website:
   site-url: https://www.marvinschmitt.com
   image: img/website_thumbnail.png
   
-  repo-url: "https://github.com/marvinschmitt/marvinschmitt-dot-com"
-  repo-branch: main
   
   search: 
     location: navbar
@@ -76,11 +74,9 @@ website:
   page-footer: 
     left: |
       <span class="faux-block">{{< fa brands creative-commons >}} 2023 Marvin Schmitt</span>
-      <span class="faux-block"><a href="https://github.com/marvinschmitt/marvinschmitt-dot-com">{{< fa brands github >}} Source Code</a></span>
     center: |
       <span class="faux-block"><a href="/impressum/index.html">Impressum</a></span>
     right: |
-      <span class="faux-block"> Designed with {{< fa heart >}}</span>
       <span class="faux-block"> Built with <a href="https://quarto.org/">Quarto</a></span>
   
 execute:

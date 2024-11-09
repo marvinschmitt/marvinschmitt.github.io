@@ -25,7 +25,7 @@
     "href": "blog/youtube-channel/index.html#im-starting-a-youtube-channel",
     "title": "I started a YouTube channel!",
     "section": "✨ I’m starting a YouTube channel ✨",
-    "text": "✨ I’m starting a YouTube channel ✨\nThe videos on the YouTube channel will fall into three categories:\n\nEarly career research: tips and advice based on my own experience\nTechnical topics: Data science, machine learning, and deep learning\nApplied programming: Visualization, reports, websites, and software design in R and Python"
+    "text": "✨ I’m starting a YouTube channel ✨\nThe videos on the YouTube channel will fall into three categories:\n\nEarly career research: tips and advice based on my own experience\nTechnical topics: Data science, machine learning, and deep learning\nApplied programming: Visualization, reports, websites, and software design in R and Python\n\n\n\n;document.getElementById(\"tweet-51988\").innerHTML = tweet[\"html\"];"
   },
   {
     "objectID": "blog/youtube-channel/index.html#about-the-channel",
