@@ -14,9 +14,9 @@ If you're interested in a full list of projects I have been involved in, please 
 
 <img src="/img/cmpe_banner.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://arxiv.org/abs/2312.05440', 'blank');"/>
 
-<a href="https://arxiv.org/abs/2312.05440" target="_blank">Preprint (arXiv)</a>
+<a href="https://arxiv.org/abs/2312.05440" target="_blank">Paper (NeurIPS 2024)</a>
 
-Consistency models for neural posterior estimation (CMPE) is a new free-form conditional sampler for scalable, fast, and amortized simulation-based inference with generative neural networks. CMPE combines the advantages of normalizing flows and flow matching methods into a single generative architecture: It essentially distills a continuous probability flow and enables rapid few-shot inference with an unconstrained architecture that can be tailored to the structure of the estimation problem.
+Consistency models for neural posterior estimation (CMPE) is a new conditional sampler for scalable, fast, and amortized simulation-based inference with generative neural networks. CMPE combines the advantages of normalizing flows and flow matching methods into a single generative architecture: It essentially distills a continuous probability flow and enables rapid few-shot inference with an unconstrained architecture that can be tailored to the structure of the estimation problem.
 
 ----
 
@@ -34,7 +34,12 @@ We present multimodal neural posterior estimation (MultiNPE), a method to integr
 
 <img src="/img/self_consistency_banner.png" style="height: 100%; width: 100%; object-fit: contain" onclick="window.open('https://openreview.net/forum?id=uoUOz427RD', 'blank');"/>
 
+
+<a href="https://arxiv.org/abs/2310.04395" target="_blank">Full Paper (ICML 2024)</a>
+|
 <a href="https://openreview.net/forum?id=uoUOz427RD" target="_blank">Short Paper (NeurIPS UniReps 2023)</a>
+|
+<a href="/assets/sc_abi_poster_ICML.pdf" target="_blank">Poster (ICML 2024)</a>
 
 We propose a method to improve the efficiency and accuracy of amortized Bayesian inference by leveraging universal symmetries in the probabilistic joint model $p(\theta,y)$. In a nutshell, we invert Bayes' theorem and estimate the marginal likelihood based on approximate representations of the joint model. Upon perfect approximation, the marginal likelihood is constant across all parameter values by definition. However, approximation error leads to undesirable variance in the marginal likelihood estimates across different parameter values. We formulate violations of this symmetry as a loss function to accelerate the learning dynamics of conditional neural density estimators.
 
