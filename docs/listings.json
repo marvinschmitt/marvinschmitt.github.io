@@ -1,0 +1,27 @@
+[
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/outlines-r/index.html",
+      "/blog/laptop-mic-obs/index.html",
+      "/blog/youtube-channel/index.html",
+      "/blog/emnist-manual-loading/index.html",
+      "/blog/functional-programming-r-basics/index.html",
+      "/blog/scientists-should-have-a-website/index.html",
+      "/blog/website-tutorial-quarto/index.html",
+      "/blog/agile-methods-for-academia/index.html",
+      "/blog/ggsimplex-prerelease/index.html",
+      "/blog/mac-email-shortcut/index.html",
+      "/blog/4-realizations-from-atomic-habits/index.html",
+      "/blog/hello-world/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/blog/outlines-r/index.html",
+      "/blog/youtube-channel/index.html",
+      "/blog/website-tutorial-quarto/index.html"
+    ]
+  }
+]

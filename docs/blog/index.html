@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="">
+<meta name="description" content="Welcome to my blog, I’m thrilled to welcome you! Here, you will find a collection of articles on a wide variety of topics. Take a look around and let me know what you think!">
+
+<title>Marvin.log() – Marvin Schmitt</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../img/favicon.ico" rel="icon">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-879e302ca45bb6811b6062ec9bd6e23b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-038b721a36534e6c6b149a7f47c70fb9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-posts_2024 .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-authorname','listing-draft','listing-project','listing-title-meta','listing-description-meta','listing-website','listing-execute','listing-filters','listing-format','listing-language','listing-freeze','listing-title-block-banner','listing-toc','listing-toc-title','listing-toc-location','listing-author','listing-title','listing-description','listing-date','listing-categories','listing-number-sections','listing-image','listing-editor','listing-path','listing-outputHref','listing-date-modified','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-resources',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-authorname","listing-draft","listing-project","listing-title-meta","listing-description-meta","listing-website","listing-execute","listing-filters","listing-format","listing-language","listing-freeze","listing-title-block-banner","listing-toc","listing-toc-title","listing-toc-location","listing-author","listing-title","listing-description","listing-date","listing-categories","listing-number-sections","listing-image","listing-editor","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-resources"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-posts_2024'] = new List('listing-posts_2024', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-posts_2023 .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-authorname','listing-draft','listing-project','listing-title-meta','listing-description-meta','listing-website','listing-execute','listing-filters','listing-format','listing-language','listing-freeze','listing-title-block-banner','listing-toc','listing-toc-title','listing-toc-location','listing-author','listing-title','listing-description','listing-date','listing-categories','listing-image','listing-number-sections','listing-editor','listing-path','listing-outputHref','listing-date-modified','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-resources','listing-twitter-card','listing-open-graph','listing-reference-location',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-authorname","listing-draft","listing-project","listing-title-meta","listing-description-meta","listing-website","listing-execute","listing-filters","listing-format","listing-language","listing-freeze","listing-title-block-banner","listing-toc","listing-toc-title","listing-toc-location","listing-author","listing-title","listing-description","listing-date","listing-categories","listing-image","listing-number-sections","listing-editor","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-resources","listing-twitter-card","listing-open-graph","listing-reference-location"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-posts_2023'] = new List('listing-posts_2023', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-posts_2022 .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-authorname','listing-draft','listing-project','listing-title-meta','listing-description-meta','listing-website','listing-execute','listing-filters','listing-format','listing-language','listing-freeze','listing-title-block-banner','listing-toc','listing-toc-title','listing-toc-location','listing-author','listing-title','listing-description','listing-date','listing-categories','listing-image','listing-reference-location','listing-path','listing-outputHref','listing-date-modified','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-authorname","listing-draft","listing-project","listing-title-meta","listing-description-meta","listing-website","listing-execute","listing-filters","listing-format","listing-language","listing-freeze","listing-title-block-banner","listing-toc","listing-toc-title","listing-toc-location","listing-author","listing-title","listing-description","listing-date","listing-categories","listing-image","listing-reference-location","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-posts_2022'] = new List('listing-posts_2022', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N36VLTEM79"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+ 
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied'
+  });
+gtag('config', 'G-N36VLTEM79', { 'anonymize_ip': true});
+</script>
+<!--<meta name="description" content="?meta:website.description">-->
+<meta name="author" content="Marvin Schmitt">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="Marvin.log() – Marvin Schmitt">
+<meta property="og:description" content="Computer Scientist &amp; Psychologist | PhD researcher | Deep Learning, Data Science, Research">
+<meta property="og:image" content="https://www.marvinschmitt.com/img/website_thumbnail.png">
+<meta property="og:site_name" content="Marvin Schmitt">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="900">
+<meta property="og:image:width" content="1600">
+<meta name="twitter:title" content="Marvin.log() – Marvin Schmitt">
+<meta name="twitter:description" content="Computer Scientist &amp; Psychologist | PhD researcher | Deep Learning, Data Science, Research">
+<meta name="twitter:image" content="https://www.marvinschmitt.com/img/website_thumbnail.png">
+<meta name="twitter:creator" content="@MarvinSchmittML">
+<meta name="twitter:image-height" content="900">
+<meta name="twitter:image-width" content="1600">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../img/ms_icon.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Marvin Schmitt</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../speaking/index.html"> 
+<span class="menu-text">Speaking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../cv/index.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../blog/index.html" aria-current="page"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/MarvinSchmittML"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@marvin-schmitt"> <i class="bi bi-youtube" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/marvinschmitt"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/marvin-schmitt/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:mail.marvinschmitt@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Year</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">2024</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">2023</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">2022</a></li>
+  </ul>
+</nav>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(12)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YWNhZGVtaWE=">academia <span class="quarto-category-count">(3)</span></div><div class="category" data-category="YW5ub3VuY2VtZW50">announcement <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ym9va3M=">books <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZnVuY3Rpb25hbCBwcm9ncmFtbWluZw==">functional programming <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFjaGluZSBsZWFybmluZw==">machine learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bmV3cw==">news <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvZ3JhbW1pbmc=">programming <span class="quarto-category-count">(4)</span></div><div class="category" data-category="cHN5Y2hvbG9neQ==">psychology <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cXVhcnRv">quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cg==">r <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3RhdGlzdGljcw==">statistics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVjaA==">tech <span class="quarto-category-count">(3)</span></div><div class="category" data-category="dGVjaG5pY2Fs">technical <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dGVjaG5vbG9neQ==">technology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dmlzdWFsaXphdGlvbg==">visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="d2Vic2l0ZQ==">website <span class="quarto-category-count">(2)</span></div></div></div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><code>Marvin.log()</code></h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Welcome to my blog, which I called <code>Marvin.log()</code>. Here’s a loose collection of articles. Currently, there is no real ordering or coherent theme, but that might change in the future. I’m not very consistent with writing regular blog posts either – I’m proud that I made it past the lonely “Hello World!” post though. If you want to get a notification when I add a new blog post, you can enter your email address at the bottom of the page. It’s free and I won’t send spam. I appreciate any kind of feedback and I’m genuinely thankful for your interest and time.</p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">2024</h2>
+<div id="listing-posts_2024" class="quarto-listing quarto-listing-container-custom">
+<div class="list blog">
+    
+    <div class="blog-entry" data-index="0" data-categories="dGVjaCxwcm9ncmFtbWluZw==" data-listing-date-sort="1728943200000" data-listing-file-modified-sort="1728996391620" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="329">
+        <div class="metadata">          
+            <p class="date listing-date">October 15, 2024</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/outlines-r/index.html">Structured Language Generation with Outlines in R</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('tech'); return false;">
+                    tech
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+                    programming
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">Calling the Outlines Python package in R with the reticulate package, with OpenAI's GPT-4o as a language model.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/outlines-r/outlines-r-thumbnail.png" alt="Structured Language Generation with Outlines in R" title="Structured Language Generation with Outlines in R">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="1" data-categories="dGVjaG5vbG9neQ==" data-listing-date-sort="1723240800000" data-listing-file-modified-sort="1723237795711" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="103">
+        <div class="metadata">          
+            <p class="date listing-date">August 10, 2024</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/laptop-mic-obs/index.html">Make your built-in laptop mic sound good in OBS</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('technology'); return false;">
+                    technology
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">Some quick tips to improve the audio quality of your recordings and screen captures.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/laptop-mic-obs/thumbnail.png" alt="Make your built-in laptop mic sound good in OBS" title="Make your built-in laptop mic sound good in OBS">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="2" data-categories="YW5ub3VuY2VtZW50" data-listing-date-sort="1720735200000" data-listing-file-modified-sort="1720892212217" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="433">
+        <div class="metadata">          
+            <p class="date listing-date">July 12, 2024</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/youtube-channel/index.html">I started a YouTube channel!</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('announcement'); return false;">
+                    announcement
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">The videos will be about early career research, technical ML/DL topics, and applied programming in R and Python. Check out my first video!</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/youtube-channel/youtube-channel-thumbnail.jpeg" alt="I started a YouTube channel!" title="I started a YouTube channel!">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="3" data-categories="cHJvZ3JhbW1pbmcscHl0aG9uLG1hY2hpbmUgbGVhcm5pbmcsdGVjaG5pY2Fs" data-listing-date-sort="1713132000000" data-listing-file-modified-sort="1713201345594" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="833">
+        <div class="metadata">          
+            <p class="date listing-date">April 15, 2024</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/emnist-manual-loading/index.html">Download EMNIST manually</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+                    programming
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('python'); return false;">
+                    python
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('machine learning'); return false;">
+                    machine learning
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('technical'); return false;">
+                    technical
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">EMNIST is a classic image data set for machine learning. Sometimes the automatic PyTorch download fails, that bugs me. Here's a quick guide to download the EMNIST data set manually and make it work with PyTorch.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/emnist-manual-loading/emnist-manual-loading-thumbnail.png" alt="Download EMNIST manually" title="Download EMNIST manually">
+        </div>
+        
+    </div>
+    
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">2023</h2>
+<div id="listing-posts_2023" class="quarto-listing quarto-listing-container-custom">
+<div class="list blog">
+    
+    <div class="blog-entry" data-index="0" data-categories="cHJvZ3JhbW1pbmcsZnVuY3Rpb25hbCBwcm9ncmFtbWluZyxyLHRlY2huaWNhbA==" data-listing-date-sort="1688940000000" data-listing-file-modified-sort="1689016262686" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1763">
+        <div class="metadata">          
+            <p class="date listing-date">July 10, 2023</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/functional-programming-r-basics/index.html">Functional Programming in R, Part 1: Basics</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+                    programming
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('functional programming'); return false;">
+                    functional programming
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('r'); return false;">
+                    r
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('technical'); return false;">
+                    technical
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">Learn how to use functional programming in R to write more efficient, maintainable, and elegant code. This blog post covers the basics of functional programming, from passing functions as arguments to creating reusable, interconnected functions. Perfect for data scientists and R programmers looking to level up their coding skills and expand their data science toolkit.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/functional-programming-r-basics/thumbnail.png" alt="Functional Programming in R, Part 1: Basics" title="Functional Programming in R, Part 1: Basics">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="1" data-categories="d2Vic2l0ZSxhY2FkZW1pYQ==" data-listing-date-sort="1687298400000" data-listing-file-modified-sort="1687380912732" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="570">
+        <div class="metadata">          
+            <p class="date listing-date">June 21, 2023</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/scientists-should-have-a-website/index.html">Every Scientist Should Have a Website</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('website'); return false;">
+                    website
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('academia'); return false;">
+                    academia
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">How putting yourself out there helps you show your research, expand your network, control your own content, reach an audience, and enhance your opportunities.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/scientists-should-have-a-website/thumbnail.png" alt="Every Scientist Should Have a Website" title="Every Scientist Should Have a Website">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="2" data-categories="dGVjaCx3ZWJzaXRlLGFjYWRlbWlhLHF1YXJ0bw==" data-listing-date-sort="1679954400000" data-listing-file-modified-sort="1681306956248" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3499">
+        <div class="metadata">          
+            <p class="date listing-date">March 28, 2023</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/website-tutorial-quarto/index.html">Create Your Website with Quarto: Complete Tutorial and Template</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('tech'); return false;">
+                    tech
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('website'); return false;">
+                    website
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('academia'); return false;">
+                    academia
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('quarto'); return false;">
+                    quarto
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">This tutorial and template will help you build your own personal website with Quarto. It is a full guide with step-by-step instructions for your personal or academic homepage.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/website-tutorial-quarto/opengraph_thumbnail.png" alt="Create Your Website with Quarto: Complete Tutorial and Template" title="Create Your Website with Quarto: Complete Tutorial and Template">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="3" data-categories="cHN5Y2hvbG9neSxhY2FkZW1pYQ==" data-listing-date-sort="1678143600000" data-listing-file-modified-sort="1678225291476" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1109">
+        <div class="metadata">          
+            <p class="date listing-date">March 7, 2023</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/agile-methods-for-academia/index.html">Agile methods in academia</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('psychology'); return false;">
+                    psychology
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('academia'); return false;">
+                    academia
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">Boost your productivity and feel less overwhelmed with these six agile methods.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/agile-methods-for-academia/agile-academia-thumbnail.png" alt="Agile methods in academia" title="Agile methods in academia">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="4" data-categories="c3RhdGlzdGljcyxSLHByb2dyYW1taW5nLHZpc3VhbGl6YXRpb24=" data-listing-date-sort="1675378800000" data-listing-file-modified-sort="1676451988547" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1554">
+        <div class="metadata">          
+            <p class="date listing-date">February 3, 2023</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/ggsimplex-prerelease/index.html">Pre-releasing the {ggsimplex} R package</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('statistics'); return false;">
+                    statistics
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('R'); return false;">
+                    R
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+                    programming
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+                    visualization
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">Here's a quick rundown of this ggplot extension for point plots and density plots in a (2-)simplex. These can be used to visualize compartmental data, posterior model probabilities, or densities with support on a probability simplex.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/ggsimplex-prerelease/figures/ggsimplex-hexsticker-thumbnail.png" alt="Pre-releasing the {ggsimplex} R package" title="Pre-releasing the {ggsimplex} R package">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="5" data-categories="dGVjaA==" data-listing-date-sort="1674514800000" data-listing-file-modified-sort="1676451995339" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="270">
+        <div class="metadata">          
+            <p class="date listing-date">January 24, 2023</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/mac-email-shortcut/index.html">Quick hack: Mac email shortcut</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('tech'); return false;">
+                    tech
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">Create a custom keyboard shortcut for your email addresses on Mac.</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/mac-email-shortcut/mac_email_thumbnail_new.png" alt="Quick hack: Mac email shortcut" title="Quick hack: Mac email shortcut">
+        </div>
+        
+    </div>
+    
+    <div class="blog-entry" data-index="6" data-categories="cHN5Y2hvbG9neSxib29rcw==" data-listing-date-sort="1673046000000" data-listing-file-modified-sort="1680089454531" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2630">
+        <div class="metadata">          
+            <p class="date listing-date">January 7, 2023</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/4-realizations-from-atomic-habits/index.html">4 Realizations from Atomic Habits</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('psychology'); return false;">
+                    psychology
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('books'); return false;">
+                    books
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">Discover the Power of Atomic Habits: A Scientific Approach to Building Good Habits and Breaking Bad Ones. Let me explain ...</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/4-realizations-from-atomic-habits/atomic_habits_thumbnail_new.png" alt="4 Realizations from Atomic Habits" title="4 Realizations from Atomic Habits">
+        </div>
+        
+    </div>
+    
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2">2022</h2>
+<div id="listing-posts_2022" class="quarto-listing quarto-listing-container-custom">
+<div class="list blog">
+    
+    <div class="blog-entry" data-index="0" data-categories="bmV3cw==" data-listing-date-sort="1652997600000" data-listing-file-modified-sort="1680090858799" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="125">
+        <div class="metadata">          
+            <p class="date listing-date">May 20, 2022</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/hello-world/index.html">Hello World!</a></p>
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('news'); return false;">
+                    news
+                </div>
+                
+            </div>
+            
+            <p class="description listing-description">For the past years, my homepage has just been a placeholder. It served a single purpose: People who enter the domain of my email address in their browser should not look at some weird empty page. So here we go!</p>
+        </div>
+        
+        <div class="thumbnail">
+            <img src="../blog/hello-world/hello-world-thumbnail.png" alt="Hello World!" title="Hello World!">
+        </div>
+        
+    </div>
+    
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+<hr>
+<p>The blog post listing is based on the website source of <a href="https://www.andrewheiss.com/" target="_blank">Andrew Heiss</a>, who has put together an incredible listing template under CC-BY-SA 4.0 license. Thank you!</p>
+
+
+
+</section>
+
+</main> <!-- /main -->
+<hr>
+<!--
+<div class="grid">
+  <div class="g-col-12 g-col-md-8 align-self-center">
+    <p>You can support my work with a coffee if you'd like to:</p>
+  </div>
+  <div class="g-col-12 g-col-md-4 align-self-center">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="marvinschmitt" data-color="#DDDDDD" data-emoji=""  data-font="Poppins" data-text="Support Me" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#E6AA04" ></script>
+  </div>
+</div>
+-->
+
+<span style="margin-top:20px; margin-bottom: 20px"></span>
+
+<img style="width:100%;" src="../img/marvins_log_thumbnail.png">
+
+<p style="margin: 20px"> Do you enjoy my blog? Subscribe here to get notifications and updates (it's free!):</p>
+
+<div class="grid">
+  <div class=".d-none .d-md-block g-col-md-1"></div>
+  <div class="g-col-12 g-col-md-10">
+    <iframe src="https://embeds.beehiiv.com/c7111066-479b-43db-ad92-8d703fe96bf0?slim=true" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="margin: 0; border-radius: 0px !important; background-color: transparent; width:100%; padding: 20px"></iframe>
+  </div>
+  <div class=".d-none .d-md-block g-col-md-1"></div>
+</div>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.marvinschmitt\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2023 Marvin Schmitt</span> <span class="faux-block"><a href="https://github.com/marvinschmitt/marvinschmitt-dot-com"><i class="fa-brands fa-github" aria-label="github"></i> Source Code</a></span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><span class="faux-block"><a href="../impressum/index.html">Impressum</a></span></p>
+</div>
+    <div class="nav-footer-right">
+<p><span class="faux-block"> Designed with <i class="fa-solid fa-heart" aria-label="heart"></i></span> <span class="faux-block"> Built with <a href="https://quarto.org/">Quarto</a></span></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

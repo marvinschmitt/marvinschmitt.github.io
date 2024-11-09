@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marvin Schmitt">
+<meta name="dcterms.date" content="2023-10-13">
+<meta name="description" content="This is a brief primer on some common taxonomy on forward simulations (parameter to data) in simulation-based inference.">
+
+<title>Taxonomy of forward simulations – Marvin Schmitt</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../img/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-879e302ca45bb6811b6062ec9bd6e23b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-038b721a36534e6c6b149a7f47c70fb9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N36VLTEM79"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+ 
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied'
+  });
+gtag('config', 'G-N36VLTEM79', { 'anonymize_ip': true});
+</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../img/bg_trees_dark_banner.png);
+background-size: cover;
+      }
+</style>
+<!--<meta name="description" content="?meta:website.description">-->
+<meta name="author" content="Marvin Schmitt">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="Taxonomy of forward simulations – Marvin Schmitt">
+<meta property="og:description" content="This is a brief primer on some common taxonomy on forward simulations (parameter to data) in simulation-based inference.">
+<meta property="og:image" content="https://www.marvinschmitt.com/img/website_thumbnail.png">
+<meta property="og:site_name" content="Marvin Schmitt">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="900">
+<meta property="og:image:width" content="1600">
+<meta name="twitter:title" content="Taxonomy of forward simulations – Marvin Schmitt">
+<meta name="twitter:description" content="This is a brief primer on some common taxonomy on forward simulations (parameter to data) in simulation-based inference.">
+<meta name="twitter:image" content="https://www.marvinschmitt.com/img/website_thumbnail.png">
+<meta name="twitter:creator" content="@MarvinSchmittML">
+<meta name="twitter:image-height" content="900">
+<meta name="twitter:image-width" content="1600">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../img/ms_icon.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Marvin Schmitt</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../speaking/index.html"> 
+<span class="menu-text">Speaking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cv/index.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/MarvinSchmittML"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@marvin-schmitt"> <i class="bi bi-youtube" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/marvinschmitt"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/marvin-schmitt/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:mail.marvinschmitt@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Taxonomy of forward simulations</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          This is a brief primer on some common taxonomy on forward simulations (parameter to data) in simulation-based inference.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">programming</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">machine learning</div>
+                <div class="quarto-category">technical</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://www.marvinschmitt.com/">Marvin Schmitt</a> <a href="https://orcid.org/0000-0002-7967-4723" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 13, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#simulations-rock" id="toc-simulations-rock" class="nav-link active" data-scroll-target="#simulations-rock">Simulations rock!</a></li>
+  <li><a href="#coding-our-own-forward-simulation-program" id="toc-coding-our-own-forward-simulation-program" class="nav-link" data-scroll-target="#coding-our-own-forward-simulation-program">Coding our own forward simulation program</a>
+  <ul class="collapse">
+  <li><a href="#simulator" id="toc-simulator" class="nav-link" data-scroll-target="#simulator">Simulator</a>
+  <ul class="collapse">
+  <li><a href="#batch-simulation" id="toc-batch-simulation" class="nav-link" data-scroll-target="#batch-simulation">Batch simulation</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
+  </ul></li>
+  <li><a href="#prior" id="toc-prior" class="nav-link" data-scroll-target="#prior">Prior</a></li>
+  <li><a href="#data-generation" id="toc-data-generation" class="nav-link" data-scroll-target="#data-generation">Data generation</a>
+  <ul class="collapse">
+  <li><a href="#notation-1" id="toc-notation-1" class="nav-link" data-scroll-target="#notation-1">Notation</a></li>
+  <li><a href="#simulation-budget" id="toc-simulation-budget" class="nav-link" data-scroll-target="#simulation-budget">Simulation budget</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#whats-next-inverse-problems-baby" id="toc-whats-next-inverse-problems-baby" class="nav-link" data-scroll-target="#whats-next-inverse-problems-baby">What’s next? Inverse problems, baby!</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<div class="no-row-height column-margin column-container">
+  <div class="">
+    <img src="?meta:image" style="width:100%">
+  </div>
+</div>
+
+
+
+
+
+<section id="simulations-rock" class="level1">
+<h1>Simulations rock!</h1>
+<p>Computer simulations play a major role in many areas of our lives, and it’s hard to overstate their relevance. Particularly in the sciences, simulators often represent the core of a scientific theory. For example, the <em>drift diffusion model</em> (DDM) from cognitive science models a binary decision process as a random walk with two thresholds.</p>
+<iframe src="https://widgets.figshare.com/articles/7123175/embed?show_title=0" width="568" height="351" frameborder="0">
+</iframe>
+<p>👆 In this video, the lines indicate the evidence accumulation process over time (<span class="math inline">\(x\)</span>-axis) until one of the thresholds (top or bottom) is reached. When a threshold is reached, the decision has taken place and the time-to-decision is recorded. This mechanistic model can easily be turned into a Python program, which is left as an exercise to the reader.</p>
+<p>If you think about it for a moment, you might naturally wonder:</p>
+<ul>
+<li>How far are these thresholds apart?</li>
+<li>Is the starting point always in the middle? What if I start my decision process in favor of the blue outcome?</li>
+<li>What is the average slope of the random walk?</li>
+<li>The decision process doesn’t start right away, I’ll have to process the instructions first.</li>
+</ul>
+<p>And you’re absolutely right! What I’m trying to show here: This mechanistic simulator has <em>parameters</em>. Following the order of the questions above, a drift diffusion model is parameterized by a threshold <span class="math inline">\(a\)</span>, a bias <span class="math inline">\(z\)</span>, a drift rate <span class="math inline">\(v\)</span> and a non-decision time <span class="math inline">\(t\)</span> (see below).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ddm_parameters.png" class="img-fluid figure-img"></p>
+<figcaption>Parameters of the drift diffusion model, figure from Vinding et al.&nbsp;(2018).</figcaption>
+</figure>
+</div>
+<p>If we define a set of parameters <span class="math inline">\((a=2, z=1, v=0.3, t=0.5)\)</span>, we can run the simulator and generate synthetic data <span class="math inline">\(y\)</span> according to the mechanistic model, just like in the video above. This is called a <em>forward problem</em>: We specify parameters <span class="math inline">\(\theta\)</span> and run the forward simulator to get <span class="math inline">\(y\sim p(y\mid\theta)\)</span>. If you’re into statistics, you might recognize <span class="math inline">\(p(y\mid\theta)\)</span> as a <em>likelihood</em>.</p>
+</section>
+<section id="coding-our-own-forward-simulation-program" class="level1">
+<h1>Coding our own forward simulation program</h1>
+<p>Implementing a drift diffusion model from scratch might be a bit of an awkward thing to start with, so we simplify things. We implement a linear Gaussian model (aka. normal distribution) with a two-dimensional parameter <span class="math inline">\(\theta\)</span> and two-dimensional data <span class="math inline">\(y\)</span>.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_probability <span class="im">as</span> tfp</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tfd <span class="op">=</span> tfp.distributions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I use <code>tensorflow_probability</code> in this blog post because it supports batch simulations out-of-the-box. The inconvenience of installing <code>tensorflow</code> and doing a few <code>numpy</code> conversions are swept away by the powers of batch simulations.</p>
+<section id="simulator" class="level2">
+<h2 class="anchored" data-anchor-id="simulator">Simulator</h2>
+<p>The simulator takes a parameter <span class="math inline">\(\theta\)</span>, does its simulator thing, and outputs data <span class="math inline">\(y\)</span>. What happens inside the simulator is between you and <del>god</del> the mechanistic model that you’re coding up. For our simple Gaussian model, the parameter <span class="math inline">\(\theta\)</span> is the location (i.e., mean) of the distribution. The covariance is fixed to <span class="math inline">\(1\)</span> to keep things simple.</p>
+<p><strong>Important:</strong> The distribution is 2-dimensional, so a single <span class="math inline">\(\theta\)</span> also has two dimensions. The first component of <span class="math inline">\(\theta\)</span> is the location on the <span class="math inline">\(x\)</span>-axis, the second component of <span class="math inline">\(\theta\)</span> determines the location on the <span class="math inline">\(y\)</span>-axis.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>]])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theta.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(1, 2)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Note:</strong> I initialize <code>theta</code> as <code>(1, 2)</code> rather than a flat <code>(2, )</code>. Later on, that’s gonna be useful when we want to simulate a batch of data sets at once.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="365" height="360" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This <span class="math inline">\(\theta=(-1, 1)\)</span> will be the location (i.e., mean) of our 2D normal distribution. Now we just have to simulate some data around this location. It’s up to us to choose <em>how many data points</em> we want to generate. Inspired by the empirical sciences, this very number of data points is called the <em>number of observations</em> or <code>num_observations</code> in our code. We default this to 50 to keep the function calls tidy, but we could modify that at any time.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulator(theta, num_observations <span class="op">=</span> <span class="dv">50</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    distribution <span class="op">=</span> tfd.MultivariateNormalDiag(loc<span class="op">=</span>theta, scale_diag<span class="op">=</span>[<span class="fl">1.</span>, <span class="fl">1.</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> distribution.sample([num_observations])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tf.transpose(y, [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>]) <span class="co"># change to num_datasets, num_observations, D</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y.numpy()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> simulator(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>That’s our simulator with a straightforward API:</p>
+<ul>
+<li><strong>Input:</strong> Parameter <span class="math inline">\(\theta\in\mathbb{R}^{\text{num\_datasets}\times K}\)</span>, where <span class="math inline">\(K\)</span> is the parameter dimension (<span class="math inline">\(K=2\)</span> in our case because we need a 2-component location information)</li>
+<li><strong>Output:</strong> Data <span class="math inline">\(y\in\mathbb{R}^{\text{num\_datasets}\times \text{num\_observations}\times D}\)</span>, where <span class="math inline">\(D\)</span> is the data dimension (<span class="math inline">\(D=2\)</span> in our case because we have a 2-dimensional Gaussian).</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In many papers, this simulator is denoted as <span class="math display">\[y\sim\mathcal{N}(\theta, \boldsymbol{1}),\]</span> where both the number of observations and the data/parameter dimensions are implicit here. An alternative variant is the formulation on the observation-level: <span class="math display">\[y_m \sim \mathcal{N}(\theta, \boldsymbol{1})\;\;\text{for}\;m=1,\ldots,M\]</span> 👆 In this notation, each single data point (one of the orange dots in the plot below) is denoted as <span class="math inline">\(y_m\)</span> and the total number of observations <code>num_observations</code> is abbreviated as <span class="math inline">\(M\)</span>.</p>
+<p>Yet another variant makes the dimensionality of the Gaussian explicit with a subscript such as <span class="math inline">\(\mathcal{N}_2\)</span> for our 2-dimensional Gaussian.</p>
+</div>
+</div>
+<p>Let’s check that all shapes match in our code:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>]])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> simulator(theta)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theta.shape) <span class="co"># should be (1, 2)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.shape) <span class="co"># should be (1, 50, 2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(1, 2)
+(1, 50, 2)</code></pre>
+</div>
+</div>
+<p>Here’s a visualization for the data <span class="math inline">\(y\)</span> (orange), relative to the location parameter <span class="math inline">\(\theta\)</span> (blue) of the data-generating Gaussian distribution:</p>
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" width="365" height="360" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="batch-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="batch-simulation">Batch simulation</h3>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">1.0</span>], [<span class="fl">2.0</span>, <span class="op">-</span><span class="fl">2.0</span>], [<span class="fl">2.0</span>, <span class="fl">2.0</span>]])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> simulator(theta)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(3, 50, 2)</code></pre>
+</div>
+</div>
+<p>Now things are getting interesting for batch-scale simulations! We first specified <em>three</em> parameter vectors, namely</p>
+<ul>
+<li><span class="math inline">\(\theta^{(1)} = (-2.5, 1.0)\)</span>,</li>
+<li><span class="math inline">\(\theta^{(2)} = (2.0, -2.0)\)</span>, and</li>
+<li><span class="math inline">\(\theta^{(3)} = (2.0, 2.0)\)</span>.</li>
+</ul>
+<p>Then, we plug this <code>(3, 2)</code> shaped parameter matrix into the simulator. Internally, the simulator slices the parameters along the first axis and generates a data set for each slice. This means that the first data set will have the location parameter <span class="math inline">\(\theta^{(1)} = (-2.5, 1.0)\)</span>, or formally:</p>
+<p><span class="math display">\[
+y^{(1)} \sim \mathcal{N}(\theta^{(1)}, \boldsymbol{1})
+\]</span></p>
+<p>Similarly, the second data set will be based on the second slice, and so on. Viewed as a single-step process, we create a <em>batch</em> of parameters and simultaneously generate a <em>batch</em> of data. This connection between parameter slice and generated data is obvious once we visualize it:</p>
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" width="642" height="395" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We end this section on batch simulation with a few notes on notation. Notation is a powerful tool, but it always bears the danger to become overly verbose and jeopardize the clarity of your work. Here, I’m not trying to use convoluted overloaded notation for the sake of it. Instead, I’m just trying to show you that this heavy notation is really just a systematic way to express how we slice stuff up and batch it in programming languages.</p>
+</section>
+<section id="notation" class="level3">
+<h3 class="anchored" data-anchor-id="notation">Notation</h3>
+<p>Recall that we generated 3 data sets <span class="math inline">\(y^{(1)}, y^{(2)}, y^{(3)}\)</span>. This can be expressed with the shorthand set notation <span class="math inline">\(\{y^{(i)}\}_{i=1}^N\)</span> where <span class="math inline">\(N=3\)</span> is the total number of data sets. So this is basically a <em>set of data sets</em>, and it is indexed by <span class="math inline">\(i=1,\ldots, N\)</span>.</p>
+<p>Further, each data set <span class="math inline">\(y{(i)}\)</span> has <span class="math inline">\(M=50\)</span> observations. We could, for instance, write <span class="math display">\[
+y^{(1)} = \{y^{(1)}_1, y^{(1)}_2, y^{(1)}_3, \ldots, y^{(1)}_{50}\}
+\]</span> to refer to the single <em>observations</em> in the first data set <span class="math inline">\(y^{(1)}\)</span>. For exampe, the seventh observation (one small dot in the plots) of the second data set is <span class="math inline">\(y^{(2)}_7\)</span>.</p>
+<p>If we ignore the inconvenience of 0-based (Python) vs.&nbsp;1-based (math) indexing for a moment, the code access does just what our mathy indices do. Recall that the data <code>y</code> have shape <code>(num_datasets, num_observations, D)</code> and the parameters have shape <code>(num_datasets, K)</code>. Similarly, we access the first data set <span class="math inline">\(y^{(1)}\)</span> and the first parameter vector <span class="math inline">\(\theta^{(1)}\)</span> as:</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>first_dataset <span class="op">=</span> y[<span class="dv">0</span>, :, :] <span class="co"># first data set, all observations, all data dimensions</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>first_parameter <span class="op">=</span> theta[<span class="dv">0</span>, :] <span class="co"># first data set, all parameter dimensions</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(first_dataset[:, <span class="dv">0</span>], first_dataset[:, <span class="dv">1</span>])</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(first_parameter[<span class="dv">0</span>], first_parameter[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-12-output-1.png" width="406" height="394" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>That’s enough notation for now. Back to modeling!</p>
+</section>
+</section>
+<section id="prior" class="level2">
+<h2 class="anchored" data-anchor-id="prior">Prior</h2>
+<p>If we’re interested in a probabilistic model, we can treat the mechanistic model parameter <span class="math inline">\(\theta\)</span> as a random variable itself. So now, <span class="math inline">\(\theta\)</span> is not restricted to <span class="math inline">\((-1, 1)\)</span> as above. Instead, we place a suitable <em>distribution</em> <span class="math inline">\(p(\theta)\)</span> over the parameter. That’s called a <em>prior</em> distribution and it’s just a way of saying “these values for <span class="math inline">\(\theta\)</span> are reasonable for the mechanistic model”. This really sounds more complicated than it is. Let’s just use a uniform distribution for simplicity here. What about <span class="math inline">\([-2, 0]\)</span> in <span class="math inline">\(x\)</span>-direction and <span class="math inline">\([-1, 1]\)</span> in <span class="math inline">\(y\)</span>-direction?</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prior(num_simulations<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    distribution <span class="op">=</span> tfd.Independent(tfd.Uniform(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      low<span class="op">=</span>[ <span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="fl">1.0</span>], <span class="co"># both lower limits</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      high<span class="op">=</span>[ <span class="fl">1.0</span>,  <span class="fl">2.0</span>]), <span class="co"># both upper limits</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      reinterpreted_batch_ndims<span class="op">=</span><span class="dv">1</span>) </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> distribution.sample([num_simulations])</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta.numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> prior(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This batched sampling statement returns 20 two-dimensional parameter vectors. Notationally, we can refer to those as <span class="math inline">\(\theta^{(1), \theta^{(2), \ldots, \theta^{(100)}\)</span>, or again in abbreviated set notation as <span class="math inline">\(\{\theta^{(i)}\}_{i=1}^N\)</span> where <span class="math inline">\(N=20\)</span> is the total number of desired data sets. In the next section, I will bring it all together and explain why this is also the <em>number of data sets</em> even though those are just the parameters. Here’s a visualization of these 20 parameter vectors in 2D space. See how the sampled parameter values all lie nice and tight within our uniform bounding box that we defined in the <code>prior</code> distribution 🤩:</p>
+<div class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-15-output-1.png" width="365" height="360" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="data-generation" class="level2">
+<h2 class="anchored" data-anchor-id="data-generation">Data generation</h2>
+<p>To sum up, we have the following components for a model with data dimension <span class="math inline">\(D\)</span> and parameter dimension <span class="math inline">\(K\)</span>:</p>
+<ul>
+<li>A <code>simulator(theta, num_observations)</code> function <span class="math inline">\(f:\theta \mapsto y\)</span> with input <span class="math inline">\(\theta\in\mathbb{R}^{\text{num\_datasets}\times K}\)</span> and output <span class="math inline">\(y\in\mathbb{R}^{\text{num\_datasets}\times\text{num\_observations}\times D}\)</span>.</li>
+<li>A <code>prior(num_datasets)</code> function with argument <code>num_datasets</code> (but no random variable as input) and output <span class="math inline">\(\theta\in\mathbb{R}^{\text{num\_datasets}\times K}\)</span>.</li>
+</ul>
+<p>So basically, we can build a simple pipe <code>simulator(prior(num_datasets))</code> because the simulator can infer <code>num_datasets</code> from <span class="math inline">\(\theta\)</span>. After all, we choose to fix <code>num_observations</code> for convenience, and we naturally fix the data dimension <span class="math inline">\(D\)</span> as well as the parameter dimension <span class="math inline">\(K\)</span> when we define the model. That means the only argument that remains to specify is the number of data sets.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generative_model(num_simulations):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  theta <span class="op">=</span> prior(num_simulations)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> simulator(theta)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> theta, y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This pipe is called a <em>generative model</em> or <em>forward model</em> because it combines the prior <span class="math inline">\(p(\theta)\)</span> with the likelihood <span class="math inline">\(p(y\mid\theta)\)</span>. Mathematically, it implements the <em>joint model</em>:</p>
+<p><span class="math display">\[
+\underbrace{p(\theta, y)}_{\text{joint}} = \underbrace{p(\theta)}_{\text{prior}}\,\underbrace{p(y\mid\theta}_{\text{likelihood}})
+\]</span> and that’s exactly how we call it with the simple API we just threw together:</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>theta, y <span class="op">=</span> generative_model(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For each of the 10 parameter vectors <span class="math inline">\(\theta{(i)}\)</span>, we get one data set <span class="math inline">\(y^{(i)}\)</span>. Each cell of the following plot shows the <span class="math inline">\(i^{th}\)</span> parameter vector (large dot, solid blue) and the corresponding <span class="math inline">\(i^{th}\)</span> data set it generated (small dots, sky blue).</p>
+<div class="cell" data-execution_count="17">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-18-output-1.png" width="346" height="272" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="notation-1" class="level3">
+<h3 class="anchored" data-anchor-id="notation-1">Notation</h3>
+<p><span class="math display">\[(\theta, y) \sim p(\theta, y)\]</span></p>
+<p>One draw from the generative model (i.e., one execution of <code>generative_model(1)</code>) returns the <em>tuple</em> <span class="math inline">\(\Big(\theta^{(i)}, y^{(i)}\Big)\equiv\Big(\theta^{(i)}, \{y^{(i)}_1, \ldots, y^{(i)}_{M}\} \Big) \equiv \Big(\theta^{(i)}, \{y^{(i)}_m\}_{m=1}^M \Big)\)</span>.</p>
+<p>Behind the scenes, the joint model is factorized into the prior and likelihood, and the step-wise sampling process with detailed notation would be:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta^{(i)} &amp;\sim p(\theta) \\
+y^{(i)}_m &amp;\sim p(y\mid\theta^{(i)})\quad \text{for}\;m=1,\ldots,M
+\end{aligned}
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning from the joint model <span class="math inline">\(p(\theta, y)\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you want to learn this forward problem (or the inverse problem; see below) from the joint model simulator, you’ll usually try to learn a map between one such parameter draw <span class="math inline">\(\theta^{(i)}\)</span> and the <em>corresponding</em> data set <span class="math inline">\(y^{(i)}\equiv\{y^{(i)}_m\}_{m=1}^M\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="simulation-budget" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-budget">Simulation budget</h3>
+<p>When we say that some approximate algorithm <span class="math inline">\(q_{\phi}(\cdot)\)</span> with learnable weights <span class="math inline">\(\phi\)</span> is being <em>trained</em> on a simulation budget of, say, <span class="math inline">\(N=1\,024\)</span>, this means that all the approximate algorithm ever sees as examples from the joint model are <span class="math inline">\(N=1\,024\)</span> tuples of parameters and data.</p>
+<p>In other words, image that you only get this single call to the generative model:</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">1024</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>theta, y <span class="op">=</span> generative_model(N)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"parameter shape: </span><span class="sc">{</span>theta<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"data shape: </span><span class="sc">{</span>y<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parameter shape: (1024, 2)
+data shape: (1024, 50, 2)</code></pre>
+</div>
+</div>
+<p>So you get <span class="math inline">\(N=1\,024\)</span> ‘ground-truth’ pairs of data and parameters to work with, and that’s all.</p>
+</section>
+</section>
+</section>
+<section id="whats-next-inverse-problems-baby" class="level1">
+<h1>What’s next? Inverse problems, baby!</h1>
+<p>Now that we have a nice and tidy data generating process, we can do all sorts of modeling. So far, we only considered the <em>forward problem</em> <span class="math inline">\(\theta\mapsto y\)</span> from parameters <span class="math inline">\(\theta\)</span> to data <span class="math inline">\(y\)</span>. But what about the <em>inverse problem</em>, where we start with some observable data <span class="math inline">\(y\)</span> and want to reason about the parameters <span class="math inline">\(\theta\)</span> that might have generated the observed data <span class="math inline">\(y\)</span>? If we express this question in a mathematical way, we are interested in the so-called <em>posterior distribution</em> <span class="math inline">\(p(\theta | y)\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="forward_inverse.png" class="img-fluid figure-img"></p>
+<figcaption>Forward problems and inverse problems are two sides of the same coin. It’s just that inverse problems are much more difficult.</figcaption>
+</figure>
+</div>
+<p>A closing example: I give you a record of reaction times from a decision experiment (see the video at the very beginning of this post). You only get the red and blue histograms, nothing more. Now you shall tell me which cognitive parameters <span class="math inline">\(\theta=(a,z,v,t)\)</span> could have generated this observed data set, along with a full probability distribution on this answer. Sounds tough? Yep, it is computationally intense to solve this question for complex problems. But there is a growing toolkit of tailored methods, and with our forward model simulations we have just laid the foundation to tackle the most recent wave of methods: Simulation-based inference with neural networks! 🥳</p>
+<p>Do you want to read a similar style post about a crash course in neural network based solutions for inverse problems? Please let me know and I’ll try to find the time!</p>
+<section id="references" class="level4">
+<h4 class="anchored" data-anchor-id="references">References</h4>
+<p>Vinding, M. C., Lindeløv, J. K., Xiao, Y., Chan, R. C. K., &amp; Sørensen, T. A. (2018). Volition in Prospective Memory: evidence against differences in recalling free and fixed delayed intentions. Center for Open Science.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<hr>
+<!--
+<div class="grid">
+  <div class="g-col-12 g-col-md-8 align-self-center">
+    <p>You can support my work with a coffee if you'd like to:</p>
+  </div>
+  <div class="g-col-12 g-col-md-4 align-self-center">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="marvinschmitt" data-color="#DDDDDD" data-emoji=""  data-font="Poppins" data-text="Support Me" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#E6AA04" ></script>
+  </div>
+</div>
+-->
+
+<span style="margin-top:20px; margin-bottom: 20px"></span>
+
+<img style="width:100%;" src="../../img/marvins_log_thumbnail.png">
+
+<p style="margin: 20px"> Do you enjoy my blog? Subscribe here to get notifications and updates (it's free!):</p>
+
+<div class="grid">
+  <div class=".d-none .d-md-block g-col-md-1"></div>
+  <div class="g-col-12 g-col-md-10">
+    <iframe src="https://embeds.beehiiv.com/c7111066-479b-43db-ad92-8d703fe96bf0?slim=true" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="margin: 0; border-radius: 0px !important; background-color: transparent; width:100%; padding: 20px"></iframe>
+  </div>
+  <div class=".d-none .d-md-block g-col-md-1"></div>
+</div>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.marvinschmitt\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb16" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Taxonomy of forward simulations"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "This is a brief primer on some common taxonomy on forward simulations (parameter to data) in simulation-based inference."</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 10-13-2023</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> </span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - programming</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">  - python</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">  - machine learning</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - technical</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="an">number-sections:</span><span class="co"> false</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">    fig-cap-location: bottom</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">    include-before-body: ../../html/margin_image.html</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">    include-after-body: ../../html/blog_footer.html</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">    comments: false</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained-math: true</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> </span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">  markdown: </span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co">    wrap: sentence</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: False</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'figure.figsize'</span>: (<span class="dv">4</span>, <span class="dv">4</span>),</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">'text.usetex'</span>: <span class="va">True</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>arrow_kw <span class="op">=</span> <span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"Simple, tail_width=0.5, head_width=10, head_length=10"</span>)</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a><span class="fu"># Simulations rock!</span></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>Computer simulations play a major role in many areas of our lives, and it's hard to overstate their relevance.</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>Particularly in the sciences, simulators often represent the core of a scientific theory.</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>For example, the *drift diffusion model* (DDM) from cognitive science models a binary decision process as a random walk with two thresholds. </span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="https://widgets.figshare.com/articles/7123175/embed?show_title=0" width="568" height="351"  frameborder="0"&gt;&lt;/iframe&gt;</span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>👆 In this video, the lines indicate the evidence accumulation process over time ($x$-axis) until one of the thresholds (top or bottom) is reached.</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>When a threshold is reached, the decision has taken place and the time-to-decision is recorded.</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>This mechanistic model can easily be turned into a Python program, which is left as an exercise to the reader.</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>If you think about it for a moment, you might naturally wonder: </span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How far are these thresholds apart?</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is the starting point always in the middle? What if I start my decision process in favor of the blue outcome?</span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the average slope of the random walk?</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The decision process doesn't start right away, I'll have to process the instructions first.</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>And you're absolutely right! What I'm trying to show here: This mechanistic simulator has *parameters*. </span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>Following the order of the questions above, a drift diffusion model is parameterized by a threshold $a$, a bias $z$, a drift rate $v$ and a non-decision time $t$ (see below).</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="al">![Parameters of the drift diffusion model, figure from Vinding et al. (2018).](ddm_parameters.png)</span></span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>If we define a set of parameters $(a=2, z=1, v=0.3, t=0.5)$, we can run the simulator and generate synthetic data $y$ according to the mechanistic model, just like in the video above.</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>This is called a *forward problem*: We specify parameters $\theta$ and run the forward simulator to get $y\sim p(y\mid\theta)$.</span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>If you're into statistics, you might recognize $p(y\mid\theta)$ as a *likelihood*.</span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a><span class="fu"># Coding our own forward simulation program</span></span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>Implementing a drift diffusion model from scratch might be a bit of an awkward thing to start with, so we simplify things.</span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a>We implement a linear Gaussian model (aka. normal distribution) with a two-dimensional parameter $\theta$ and two-dimensional data $y$.</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_probability <span class="im">as</span> tfp</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>tfd <span class="op">=</span> tfp.distributions</span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>I use <span class="in">`tensorflow_probability`</span> in this blog post because it supports batch simulations out-of-the-box.</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>The inconvenience of installing <span class="in">`tensorflow`</span> and doing a few <span class="in">`numpy`</span> conversions are swept away by the powers of batch simulations.</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulator</span></span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>The simulator takes a parameter $\theta$, does its simulator thing, and outputs data $y$.</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>What happens inside the simulator is between you and ~~god~~ the mechanistic model that you're coding up.</span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>For our simple Gaussian model, the parameter $\theta$ is the location (i.e., mean) of the distribution.</span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>The covariance is fixed to $1$ to keep things simple.</span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>**Important:** The distribution is 2-dimensional, so a single $\theta$ also has two dimensions.</span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>The first component of $\theta$ is the location on the $x$-axis, the second component of $\theta$ determines the location on the $y$-axis.</span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>]])</span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theta.shape)</span>
+<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>**Note:** I initialize <span class="in">`theta`</span> as <span class="in">`(1, 2)`</span> rather than a flat <span class="in">`(2, )`</span>. Later on, that's gonna be useful when we want to simulate a batch of data sets at once.</span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: False</span></span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\theta_1$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$\theta_2$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>ax.set_axisbelow(<span class="va">True</span>)</span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a>ax.scatter(theta[<span class="dv">0</span>, <span class="dv">0</span>], theta[<span class="dv">0</span>, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="op">-</span><span class="fl">3.5</span>, <span class="fl">3.3</span>, <span class="vs">r"$\theta=(-1, 1)$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, color <span class="op">=</span> <span class="st">"blue"</span>, weight<span class="op">=</span><span class="st">'bold'</span>) </span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a>ax.add_patch(patches.FancyArrowPatch((<span class="op">-</span><span class="fl">3.3</span>, <span class="fl">3.1</span>), (<span class="op">-</span><span class="fl">1.15</span>, <span class="fl">1.1</span>), connectionstyle<span class="op">=</span><span class="st">"arc3,rad=.35"</span>, color<span class="op">=</span><span class="st">"blue"</span>, <span class="op">**</span>arrow_kw))</span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>This $\theta=(-1, 1)$ will be the location (i.e., mean) of our 2D normal distribution.</span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a>Now we just have to simulate some data around this location.</span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>It's up to us to choose *how many data points* we want to generate.</span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>Inspired by the empirical sciences, this very number of data points is called the *number of observations* or <span class="in">`num_observations`</span> in our code.</span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>We default this to 50 to keep the function calls tidy, but we could modify that at any time. </span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulator(theta, num_observations <span class="op">=</span> <span class="dv">50</span>):</span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a>    distribution <span class="op">=</span> tfd.MultivariateNormalDiag(loc<span class="op">=</span>theta, scale_diag<span class="op">=</span>[<span class="fl">1.</span>, <span class="fl">1.</span>])</span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> distribution.sample([num_observations])</span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tf.transpose(y, [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>]) <span class="co"># change to num_datasets, num_observations, D</span></span>
+<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y.numpy()</span>
+<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> simulator(theta)</span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a>That's our simulator with a straightforward API: </span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Input:** Parameter $\theta\in\mathbb{R}^{\text{num<span class="sc">\_</span>datasets}\times K}$, where $K$ is the parameter dimension ($K=2$ in our case because we need a 2-component location information)</span>
+<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Output:** Data $y\in\mathbb{R}^{\text{num<span class="sc">\_</span>datasets}\times \text{num<span class="sc">\_</span>observations}\times D}$, where $D$</span>
+<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a> is the data dimension ($D=2$ in our case because we have a 2-dimensional Gaussian).</span>
+<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a>In many papers, this simulator is denoted as </span>
+<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a>$$y\sim\mathcal{N}(\theta, \boldsymbol{1}),$$ </span>
+<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>where both the number of observations and the data/parameter dimensions are implicit here.</span>
+<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>An alternative variant is the formulation on the observation-level:</span>
+<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>$$y_m \sim \mathcal{N}(\theta, \boldsymbol{1})\;\;\text{for}\;m=1,\ldots,M$$</span>
+<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a>👆 In this notation, each single data point (one of the orange dots in the plot below) is denoted as $y_m$ and the total number of observations <span class="in">`num_observations`</span> is abbreviated as $M$.</span>
+<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a>Yet another variant makes the dimensionality of the Gaussian explicit with a subscript such as $\mathcal{N}_2$ for our 2-dimensional Gaussian.</span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a>Let's check that all shapes match in our code:</span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>]])</span>
+<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> simulator(theta)</span>
+<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theta.shape) <span class="co"># should be (1, 2)</span></span>
+<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.shape) <span class="co"># should be (1, 50, 2)</span></span>
+<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a>Here's a visualization for the data $y$ (orange), relative to the location parameter $\theta$ (blue) of the data-generating Gaussian distribution:</span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: False</span></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\theta_1$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$\theta_2$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a>ax.set_axisbelow(<span class="va">True</span>)</span>
+<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a>ax.scatter(theta[<span class="dv">0</span>, <span class="dv">0</span>], theta[<span class="dv">0</span>, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">"blue"</span>, label<span class="op">=</span><span class="vs">r"$\theta$"</span>)</span>
+<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="op">-</span><span class="fl">3.5</span>, <span class="fl">3.3</span>, <span class="vs">r"$\theta=(-1, 1)$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, color <span class="op">=</span> <span class="st">"blue"</span>, weight<span class="op">=</span><span class="st">'bold'</span>) </span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a>ax.add_patch(patches.FancyArrowPatch((<span class="op">-</span><span class="fl">3.3</span>, <span class="fl">3.1</span>), (<span class="op">-</span><span class="fl">1.15</span>, <span class="fl">1.1</span>), connectionstyle<span class="op">=</span><span class="st">"arc3,rad=.35"</span>, color<span class="op">=</span><span class="st">"blue"</span>, <span class="op">**</span>arrow_kw))</span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a>ax.scatter(y[<span class="dv">0</span>, :, <span class="dv">0</span>], y[<span class="dv">0</span>, :, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span><span class="st">"orange"</span>, label<span class="op">=</span><span class="vs">r"$y$"</span>)</span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### Batch simulation</span></span>
+<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">1.0</span>], [<span class="fl">2.0</span>, <span class="op">-</span><span class="fl">2.0</span>], [<span class="fl">2.0</span>, <span class="fl">2.0</span>]])</span>
+<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> simulator(theta)</span>
+<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.shape)</span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>Now things are getting interesting for batch-scale simulations!</span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>We first specified *three* parameter vectors, namely</span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\theta^{(1)} = (-2.5, 1.0)$,</span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\theta^{(2)} = (2.0, -2.0)$, and</span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\theta^{(3)} = (2.0, 2.0)$.</span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>Then, we plug this <span class="in">`(3, 2)`</span> shaped parameter matrix into the simulator.</span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>Internally, the simulator slices the parameters along the first axis and generates a data set for each slice.</span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>This means that the first data set will have the location parameter $\theta^{(1)} = (-2.5, 1.0)$, or formally:</span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>y^{(1)} \sim \mathcal{N}(\theta^{(1)}, \boldsymbol{1})</span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a>Similarly, the second data set will be based on the second slice, and so on.</span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a>Viewed as a single-step process, we create a *batch* of parameters and simultaneously generate a *batch* of data.</span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a>This connection between parameter slice and generated data is obvious once we visualize it:</span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: False</span></span>
+<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\theta_1$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$\theta_2$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>ax.set_axisbelow(<span class="va">True</span>)</span>
+<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a>ax.scatter(y[<span class="dv">0</span>, :, <span class="dv">0</span>], y[<span class="dv">0</span>, :, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span><span class="st">"lightblue"</span>, label<span class="op">=</span><span class="vs">r"$y^{(1)}$ Data set 1"</span>)</span>
+<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a>ax.scatter(theta[<span class="dv">0</span>, <span class="dv">0</span>], theta[<span class="dv">0</span>, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">"blue"</span>, label<span class="op">=</span><span class="vs">r"$\theta^{(1)}$ Parameter 1"</span>)</span>
+<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>ax.scatter(y[<span class="dv">1</span>, :, <span class="dv">0</span>], y[<span class="dv">1</span>, :, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span><span class="st">"magenta"</span>, label<span class="op">=</span><span class="st">"$y^{(2)}$ Data set 2"</span>)</span>
+<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a>ax.scatter(theta[<span class="dv">1</span>, <span class="dv">0</span>], theta[<span class="dv">1</span>, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="vs">r"$\theta^{(2)}$ Parameter 2"</span>)</span>
+<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a>ax.scatter(y[<span class="dv">2</span>, :, <span class="dv">0</span>], y[<span class="dv">2</span>, :, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span><span class="st">"yellow"</span>, label<span class="op">=</span><span class="st">"$y^{(3)}$ Data set 3"</span>)</span>
+<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a>ax.scatter(theta[<span class="dv">2</span>, <span class="dv">0</span>], theta[<span class="dv">2</span>, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">"orange"</span>, label<span class="op">=</span><span class="vs">r"$\theta^{(3)}$ Parameter 3"</span>)</span>
+<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">14</span>, ncols<span class="op">=</span><span class="dv">3</span>, loc<span class="op">=</span><span class="st">"upper center"</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">0.5</span>, <span class="fl">1.15</span>))</span>
+<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>We end this section on batch simulation with a few notes on notation.</span>
+<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>Notation is a powerful tool, but it always bears the danger to become overly verbose and jeopardize the clarity of your work.</span>
+<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>Here, I'm not trying to use convoluted overloaded notation for the sake of it.</span>
+<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a>Instead, I'm just trying to show you that this heavy notation is really just a systematic way to express how we slice stuff up and batch it in programming languages.</span>
+<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### Notation</span></span>
+<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>Recall that we generated 3 data sets $y^{(1)}, y^{(2)}, y^{(3)}$.</span>
+<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a>This can be expressed with the shorthand set notation $<span class="sc">\{</span>y^{(i)}<span class="sc">\}</span>_{i=1}^N$ where $N=3$ is the total number of data sets.</span>
+<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>So this is basically a *set of data sets*, and it is indexed by $i=1,\ldots, N$.</span>
+<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>Further, each data set $y{(i)}$ has $M=50$ observations.</span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>We could, for instance, write </span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>y^{(1)} = <span class="sc">\{</span>y^{(1)}_1, y^{(1)}_2, y^{(1)}_3, \ldots, y^{(1)}_{50}<span class="sc">\}</span></span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>to refer to the single *observations* in the first data set $y^{(1)}$.</span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a>For exampe, the seventh observation (one small dot in the plots) of the second data set is $y^{(2)}_7$.</span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>If we ignore the inconvenience of 0-based (Python) vs. 1-based (math) indexing for a moment, the code access does just what our mathy indices do.</span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>Recall that the data <span class="in">`y`</span> have shape <span class="in">`(num_datasets, num_observations, D)`</span> and the parameters have shape <span class="in">`(num_datasets, K)`</span>.</span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>Similarly, we access the first data set $y^{(1)}$ and the first parameter vector $\theta^{(1)}$ as:</span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: False</span></span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>first_dataset <span class="op">=</span> y[<span class="dv">0</span>, :, :] <span class="co"># first data set, all observations, all data dimensions</span></span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a>first_parameter <span class="op">=</span> theta[<span class="dv">0</span>, :] <span class="co"># first data set, all parameter dimensions</span></span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a>plt.scatter(first_dataset[:, <span class="dv">0</span>], first_dataset[:, <span class="dv">1</span>])</span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>plt.scatter(first_parameter[<span class="dv">0</span>], first_parameter[<span class="dv">1</span>])</span>
+<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: False</span></span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a>first_dataset <span class="op">=</span> y[<span class="dv">0</span>, :, :] <span class="co"># first data set, all observations, all data dimensions</span></span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a>first_parameter <span class="op">=</span> theta[<span class="dv">0</span>, :] <span class="co"># first data set, all parameter dimensions</span></span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\theta_1$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$\theta_2$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a>ax.set_axisbelow(<span class="va">True</span>)</span>
+<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a>ax.scatter(first_dataset[:, <span class="dv">0</span>], first_dataset[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span><span class="st">"lightblue"</span>, label<span class="op">=</span><span class="st">"Data set 1"</span>)</span>
+<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a>ax.scatter(first_parameter[<span class="dv">0</span>], first_parameter[<span class="dv">1</span>], s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">"blue"</span>, label<span class="op">=</span><span class="vs">r"Parameter 1"</span>)</span>
+<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">16</span>, ncols<span class="op">=</span><span class="dv">3</span>, loc<span class="op">=</span><span class="st">"upper center"</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">0.5</span>, <span class="fl">1.15</span>))</span>
+<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a>That's enough notation for now. Back to modeling!</span>
+<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prior</span></span>
+<span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a>If we're interested in a probabilistic model, we can treat the mechanistic model parameter $\theta$ as a random variable itself.</span>
+<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a>So now, $\theta$ is not restricted to $(-1, 1)$ as above.</span>
+<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>Instead, we place a suitable *distribution* $p(\theta)$ over the parameter.</span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a>That's called a *prior* distribution and it's just a way of saying "these values for $\theta$ are reasonable for the mechanistic model".</span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>This really sounds more complicated than it is.</span>
+<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a>Let's just use a uniform distribution for simplicity here.</span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>What about $<span class="co">[</span><span class="ot">-2, 0</span><span class="co">]</span>$ in $x$-direction and $<span class="co">[</span><span class="ot">-1, 1</span><span class="co">]</span>$ in $y$-direction?</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prior(num_simulations<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>    distribution <span class="op">=</span> tfd.Independent(tfd.Uniform(</span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a>      low<span class="op">=</span>[ <span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="fl">1.0</span>], <span class="co"># both lower limits</span></span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>      high<span class="op">=</span>[ <span class="fl">1.0</span>,  <span class="fl">2.0</span>]), <span class="co"># both upper limits</span></span>
+<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>      reinterpreted_batch_ndims<span class="op">=</span><span class="dv">1</span>) </span>
+<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> distribution.sample([num_simulations])</span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta.numpy()</span>
+<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> prior(<span class="dv">20</span>)</span>
+<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>This batched sampling statement returns 20 two-dimensional parameter vectors.</span>
+<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a>Notationally, we can refer to those as $\theta^{(1), \theta^{(2), \ldots, \theta^{(100)}$, or again in abbreviated set notation as $<span class="sc">\{</span>\theta^{(i)}<span class="sc">\}</span>_{i=1}^N$ where $N=20$ is the total number of desired data sets. </span>
+<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>In the next section, I will bring it all together and explain why this is also the *number of data sets* even though those are just the parameters.</span>
+<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a>Here's a visualization of these 20 parameter vectors in 2D space.</span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a>See how the sampled parameter values all lie nice and tight within our uniform bounding box that we defined in the <span class="in">`prior`</span> distribution 🤩:</span>
+<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: False</span></span>
+<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\theta_1$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$\theta_2$"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a>ax.set_axisbelow(<span class="va">True</span>)</span>
+<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a>ax.scatter(theta[:, <span class="dv">0</span>], theta[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span><span class="st">"blue"</span>, label<span class="op">=</span><span class="vs">r"Parameter samples"</span>)</span>
+<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a>ax.add_patch(patches.Rectangle((<span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="dv">1</span>), <span class="dv">6</span>, <span class="dv">3</span>, linewidth<span class="op">=</span><span class="dv">1</span>, edgecolor<span class="op">=</span><span class="st">'red'</span>, facecolor<span class="op">=</span><span class="st">'none'</span>, linestyle <span class="op">=</span> <span class="st">'dashed'</span>))</span>
+<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.5</span>, <span class="fl">2.2</span>, <span class="st">"Prior support"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-415"><a href="#cb16-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data generation</span></span>
+<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a>To sum up, we have the following components for a model with data dimension $D$ and parameter dimension $K$:</span>
+<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A <span class="in">`simulator(theta, num_observations)`</span> function $f:\theta \mapsto y$ with input $\theta\in\mathbb{R}^{\text{num<span class="sc">\_</span>datasets}\times K}$ and output $y\in\mathbb{R}^{\text{num<span class="sc">\_</span>datasets}\times\text{num<span class="sc">\_</span>observations}\times D}$.</span>
+<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A <span class="in">`prior(num_datasets)`</span> function with argument <span class="in">`num_datasets`</span> (but no random variable as input) and output $\theta\in\mathbb{R}^{\text{num<span class="sc">\_</span>datasets}\times K}$.</span>
+<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a>So basically, we can build a simple pipe <span class="in">`simulator(prior(num_datasets))`</span> because the simulator can infer <span class="in">`num_datasets`</span> from $\theta$.</span>
+<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a>After all, we choose to fix <span class="in">`num_observations`</span> for convenience, and we naturally fix the data dimension $D$ as well as the parameter dimension $K$ when we define the model.</span>
+<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a>That means the only argument that remains to specify is the number of data sets.</span>
+<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generative_model(num_simulations):</span>
+<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a>  theta <span class="op">=</span> prior(num_simulations)</span>
+<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> simulator(theta)</span>
+<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> theta, y</span>
+<span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-437"><a href="#cb16-437" aria-hidden="true" tabindex="-1"></a>This pipe is called a *generative model* or *forward model* because it combines the prior $p(\theta)$ with the likelihood $p(y\mid\theta)$.</span>
+<span id="cb16-438"><a href="#cb16-438" aria-hidden="true" tabindex="-1"></a>Mathematically, it implements the *joint model*:</span>
+<span id="cb16-439"><a href="#cb16-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a>\underbrace{p(\theta, y)}_{\text{joint}} = \underbrace{p(\theta)}_{\text{prior}}\,\underbrace{p(y\mid\theta}_{\text{likelihood}})</span>
+<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a>and that's exactly how we call it with the simple API we just threw together:</span>
+<span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-448"><a href="#cb16-448" aria-hidden="true" tabindex="-1"></a>theta, y <span class="op">=</span> generative_model(<span class="dv">10</span>)</span>
+<span id="cb16-449"><a href="#cb16-449" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-451"><a href="#cb16-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-452"><a href="#cb16-452" aria-hidden="true" tabindex="-1"></a>For each of the 10 parameter vectors $\theta{(i)}$, we get one data set $y^{(i)}$.</span>
+<span id="cb16-453"><a href="#cb16-453" aria-hidden="true" tabindex="-1"></a>Each cell of the following plot shows the $i^{th}$ parameter vector (large dot, solid blue) and the corresponding $i^{th}$ data set it generated (small dots, sky blue).</span>
+<span id="cb16-454"><a href="#cb16-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-457"><a href="#cb16-457" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-458"><a href="#cb16-458" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: False</span></span>
+<span id="cb16-459"><a href="#cb16-459" aria-hidden="true" tabindex="-1"></a>f, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb16-460"><a href="#cb16-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-461"><a href="#cb16-461" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes.flatten()):</span>
+<span id="cb16-462"><a href="#cb16-462" aria-hidden="true" tabindex="-1"></a>  ax.set_xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-463"><a href="#cb16-463" aria-hidden="true" tabindex="-1"></a>  ax.set_ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb16-464"><a href="#cb16-464" aria-hidden="true" tabindex="-1"></a>  ax.set_xticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-465"><a href="#cb16-465" aria-hidden="true" tabindex="-1"></a>  ax.set_yticks(np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-466"><a href="#cb16-466" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ax.set_xlabel(r"$\theta_1$", fontsize=16)</span></span>
+<span id="cb16-467"><a href="#cb16-467" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ax.set_ylabel(r"$\theta_2$", fontsize=16)</span></span>
+<span id="cb16-468"><a href="#cb16-468" aria-hidden="true" tabindex="-1"></a>  ax.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-469"><a href="#cb16-469" aria-hidden="true" tabindex="-1"></a>  ax.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-470"><a href="#cb16-470" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb16-471"><a href="#cb16-471" aria-hidden="true" tabindex="-1"></a>  ax.set_axisbelow(<span class="va">True</span>)</span>
+<span id="cb16-472"><a href="#cb16-472" aria-hidden="true" tabindex="-1"></a>  ax.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-473"><a href="#cb16-473" aria-hidden="true" tabindex="-1"></a>  ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb16-474"><a href="#cb16-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-475"><a href="#cb16-475" aria-hidden="true" tabindex="-1"></a>  ax.scatter(y[i, :, <span class="dv">0</span>], y[i, :, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span><span class="st">'lightblue'</span>)</span>
+<span id="cb16-476"><a href="#cb16-476" aria-hidden="true" tabindex="-1"></a>  ax.scatter(theta[i, <span class="dv">0</span>], theta[i, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">100</span>, c<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb16-477"><a href="#cb16-477" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="ss">f"</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-478"><a href="#cb16-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-479"><a href="#cb16-479" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-480"><a href="#cb16-480" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb16-481"><a href="#cb16-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-482"><a href="#cb16-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-483"><a href="#cb16-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-484"><a href="#cb16-484" aria-hidden="true" tabindex="-1"></a><span class="fu">### Notation</span></span>
+<span id="cb16-485"><a href="#cb16-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-486"><a href="#cb16-486" aria-hidden="true" tabindex="-1"></a>$$(\theta, y) \sim p(\theta, y)$$</span>
+<span id="cb16-487"><a href="#cb16-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-488"><a href="#cb16-488" aria-hidden="true" tabindex="-1"></a>One draw from the generative model (i.e., one execution of <span class="in">`generative_model(1)`</span>) returns the *tuple* $\Big(\theta^{(i)}, y^{(i)}\Big)\equiv\Big(\theta^{(i)}, <span class="sc">\{</span>y^{(i)}_1, \ldots, y^{(i)}_{M}\} \Big) \equiv \Big(\theta^{(i)}, \{y^{(i)}_m\}_{m=1}^M \Big)$.</span>
+<span id="cb16-489"><a href="#cb16-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-490"><a href="#cb16-490" aria-hidden="true" tabindex="-1"></a>Behind the scenes, the joint model is factorized into the prior and likelihood, and the step-wise sampling process with detailed notation would be:</span>
+<span id="cb16-491"><a href="#cb16-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-492"><a href="#cb16-492" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-493"><a href="#cb16-493" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb16-494"><a href="#cb16-494" aria-hidden="true" tabindex="-1"></a>\theta^{(i)} &amp;\sim p(\theta) <span class="sc">\\</span></span>
+<span id="cb16-495"><a href="#cb16-495" aria-hidden="true" tabindex="-1"></a>y^{(i)}_m &amp;\sim p(y\mid\theta^{(i)})\quad \text{for}\;m=1,\ldots,M</span>
+<span id="cb16-496"><a href="#cb16-496" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb16-497"><a href="#cb16-497" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-498"><a href="#cb16-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-499"><a href="#cb16-499" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb16-500"><a href="#cb16-500" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning from the joint model $p(\theta, y)$</span></span>
+<span id="cb16-501"><a href="#cb16-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-502"><a href="#cb16-502" aria-hidden="true" tabindex="-1"></a>If you want to learn this forward problem (or the inverse problem; see below) from the joint model simulator, you'll usually try to learn a map between one such parameter draw $\theta^{(i)}$ and the *corresponding* data set $y^{(i)}\equiv<span class="sc">\{</span>y^{(i)}_m\}_{m=1}^M$.</span>
+<span id="cb16-503"><a href="#cb16-503" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-504"><a href="#cb16-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-505"><a href="#cb16-505" aria-hidden="true" tabindex="-1"></a><span class="fu">### Simulation budget</span></span>
+<span id="cb16-506"><a href="#cb16-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-507"><a href="#cb16-507" aria-hidden="true" tabindex="-1"></a>When we say that some approximate algorithm $q_{\phi}(\cdot)$ with learnable weights $\phi$ is being *trained* on a simulation budget of, say, $N=1\,024$, this means that all the approximate algorithm ever sees as examples from the joint model are $N=1\,024$ tuples of parameters and data.</span>
+<span id="cb16-508"><a href="#cb16-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-509"><a href="#cb16-509" aria-hidden="true" tabindex="-1"></a>In other words, image that you only get this single call to the generative model:</span>
+<span id="cb16-510"><a href="#cb16-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-513"><a href="#cb16-513" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb16-514"><a href="#cb16-514" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">1024</span></span>
+<span id="cb16-515"><a href="#cb16-515" aria-hidden="true" tabindex="-1"></a>theta, y <span class="op">=</span> generative_model(N)</span>
+<span id="cb16-516"><a href="#cb16-516" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"parameter shape: </span><span class="sc">{</span>theta<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-517"><a href="#cb16-517" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"data shape: </span><span class="sc">{</span>y<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-518"><a href="#cb16-518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-519"><a href="#cb16-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-520"><a href="#cb16-520" aria-hidden="true" tabindex="-1"></a>So you get $N=1\,024$ 'ground-truth' pairs of data and parameters to work with, and that's all.</span>
+<span id="cb16-521"><a href="#cb16-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-522"><a href="#cb16-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-523"><a href="#cb16-523" aria-hidden="true" tabindex="-1"></a><span class="fu"># What's next? Inverse problems, baby!</span></span>
+<span id="cb16-524"><a href="#cb16-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-525"><a href="#cb16-525" aria-hidden="true" tabindex="-1"></a>Now that we have a nice and tidy data generating process, we can do all sorts of modeling.</span>
+<span id="cb16-526"><a href="#cb16-526" aria-hidden="true" tabindex="-1"></a>So far, we only considered the *forward problem* $\theta\mapsto y$ from parameters $\theta$ to data $y$.</span>
+<span id="cb16-527"><a href="#cb16-527" aria-hidden="true" tabindex="-1"></a>But what about the *inverse problem*, where we start with some observable data $y$ and want to reason about the parameters $\theta$ that might have generated the observed data $y$?</span>
+<span id="cb16-528"><a href="#cb16-528" aria-hidden="true" tabindex="-1"></a>If we express this question in a mathematical way, we are interested in the so-called *posterior distribution* $p(\theta | y)$.</span>
+<span id="cb16-529"><a href="#cb16-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-530"><a href="#cb16-530" aria-hidden="true" tabindex="-1"></a><span class="al">![Forward problems and inverse problems are two sides of the same coin. It's just that inverse problems are much more difficult.](forward_inverse.png)</span></span>
+<span id="cb16-531"><a href="#cb16-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-532"><a href="#cb16-532" aria-hidden="true" tabindex="-1"></a>A closing example: I give you a record of reaction times from a decision experiment (see the video at the very beginning of this post).</span>
+<span id="cb16-533"><a href="#cb16-533" aria-hidden="true" tabindex="-1"></a>You only get the red and blue histograms, nothing more.</span>
+<span id="cb16-534"><a href="#cb16-534" aria-hidden="true" tabindex="-1"></a>Now you shall tell me which cognitive parameters $\theta=(a,z,v,t)$ could have generated this observed data set, along with a full probability distribution on this answer.</span>
+<span id="cb16-535"><a href="#cb16-535" aria-hidden="true" tabindex="-1"></a>Sounds tough? Yep, it is computationally intense to solve this question for complex problems.</span>
+<span id="cb16-536"><a href="#cb16-536" aria-hidden="true" tabindex="-1"></a>But there is a growing toolkit of tailored methods, and with our forward model simulations we have just laid the foundation to tackle the most recent wave of methods: Simulation-based inference with neural networks! 🥳</span>
+<span id="cb16-537"><a href="#cb16-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-538"><a href="#cb16-538" aria-hidden="true" tabindex="-1"></a>Do you want to read a similar style post about a crash course in neural network based solutions for inverse problems? Please let me know and I'll try to find the time!</span>
+<span id="cb16-539"><a href="#cb16-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-540"><a href="#cb16-540" aria-hidden="true" tabindex="-1"></a><span class="fu">#### References</span></span>
+<span id="cb16-541"><a href="#cb16-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-542"><a href="#cb16-542" aria-hidden="true" tabindex="-1"></a>Vinding, M. C., Lindeløv, J. K., Xiao, Y., Chan, R. C. K., &amp; Sørensen, T. A. (2018). Volition in Prospective Memory: evidence against differences in recalling free and fixed delayed intentions. Center for Open Science.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2023 Marvin Schmitt</span> <span class="faux-block"><a href="https://github.com/marvinschmitt/marvinschmitt-dot-com"><i class="fa-brands fa-github" aria-label="github"></i> Source Code</a></span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><span class="faux-block"><a href="../../impressum/index.html">Impressum</a></span></p>
+</div>
+    <div class="nav-footer-right">
+<p><span class="faux-block"> Designed with <i class="fa-solid fa-heart" aria-label="heart"></i></span> <span class="faux-block"> Built with <a href="https://quarto.org/">Quarto</a></span></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
