@@ -91,6 +91,10 @@ listing:
 
 :::{#news}
 ## News
+- **November 25, 2024**: Over the past week I migrated to Bluesky and will mostly engage there instead of X/Twitter. 
+The community is growing extremely quickly, the atmosphere is friendly, and I strongly recommend checking it out.
+You can find me under the handle [@marvinschmitt.com](https://bsky.app/profile/marvinschmitt.com) {{< iconify simple-icons bluesky >}}
+
 - **November 9, 2024**: My work just reached 100 citations on Google Scholar. It might be small for many others, but it means a lot to me. I started my PhD with no research experience, and I’ve learned so much ever since. Thank you to my mentors, collaborators, and everyone who engaged with my work 🧡
 
 - **September 25, 2024**: Our paper on consistency models for simulation-based inference ([Link](projects/#cmpe)) has been accepted at NeurIPS 2024!

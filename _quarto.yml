@@ -45,6 +45,8 @@ website:
       - text: Blog
         href: blog/index.qmd
     right:
+      - text: "{{< iconify simple-icons bluesky >}}"
+        href: https://bsky.app/profile/marvinschmitt.com
       - icon: twitter
         href: https://twitter.com/MarvinSchmittML
       - icon: youtube
