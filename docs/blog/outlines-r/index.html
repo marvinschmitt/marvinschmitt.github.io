@@ -323,12 +323,12 @@ background-size: cover;
 <pre><code>[1] "Posterior"</code></pre>
 </div>
 </div>
-<p>Let’s try another more technical question, this time about the choice of a suitable likelihood for count data.</p>
+<p>Let’s try another more technical question, this time about the choice of a suitable distribution family to model count data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>choices <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Gaussian"</span>, <span class="st">"Poisson"</span>, <span class="st">"Negative-Binomial"</span>, <span class="st">"Gamma"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>generator <span class="ot">&lt;-</span> outlines<span class="sc">$</span>generate<span class="sc">$</span><span class="fu">choice</span>(model, choices)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">generator</span>(<span class="st">"We have a Bayesian model for count data $y$. The data $y$ is lower-bounded at zero, can take on integer values, and is probably overdispersed. The most suitable likelihood is "</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">generator</span>(<span class="st">"We have a Bayesian model for count data $y$. The data $y$ is lower-bounded at zero, can take on integer values, and is probably overdispersed. The most suitable distribution family for the data model is "</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Negative-Binomial"</code></pre>

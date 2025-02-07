@@ -60,13 +60,13 @@ result <- generator("In a Bayesian model, what do we call the probability distri
 print(result)
 ```
 
-Let's try another more technical question, this time about the choice of a suitable likelihood for count data.
+Let's try another more technical question, this time about the choice of a suitable distribution family to model count data.
 
 ```{r}
 choices = c("Gaussian", "Poisson", "Negative-Binomial", "Gamma")
 generator <- outlines$generate$choice(model, choices)
 
-result <- generator("We have a Bayesian model for count data $y$. The data $y$ is lower-bounded at zero, can take on integer values, and is probably overdispersed. The most suitable likelihood is ")
+result <- generator("We have a Bayesian model for count data $y$. The data $y$ is lower-bounded at zero, can take on integer values, and is probably overdispersed. The most suitable distribution family for the data model is ")
 print(result)
 ```
 
