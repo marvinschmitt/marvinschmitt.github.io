@@ -42,12 +42,13 @@ listing:
             <p>I like using deep neural networks to solve hard problems in probabilistic machine learning. I am a Computer Scientist and a Psychologist.
             </p>
             <p>
-            I am a final-year PhD student at the European Laboratory for Learning and Intelligent Systems (<a href="https://ellis.eu/" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>ELLIS</span></a>) supervised by <a href="https://paul-buerkner.github.io/" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>Paul Bürkner</span></a>, <a href="https://faculty.rpi.edu/stefan-radev" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>Stefan Radev</span></a>, and <a href="https://users.aalto.fi/~ave/" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>Aki Vehtari</span></a>. My main affiliation is the Cluster of Excellence <a href="https://www.simtech.uni-stuttgart.de/" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>SimTech</span></a> at the University of Stuttgart, Germany.
+            I just defended my PhD at the European Laboratory for Learning and Intelligent Systems (<a href="https://ellis.eu/" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>ELLIS</span></a>) supervised by <a href="https://paul-buerkner.github.io/" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>Paul Bürkner</span></a>, <a href="https://faculty.rpi.edu/stefan-radev" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>Stefan Radev</span></a>, and <a href="https://users.aalto.fi/~ave/" target="_blank"><span style='text-decoration: underline;text-decoration-color: #E6AA04;'>Aki Vehtari</span></a>.
+            During my PhD, I was affiliated with the Graduate School SimTech (Stuttgart 🇩🇪), an academic visitor for 6 months at Aalto University (Helsinki/Espoo 🇫🇮), and an associated student at the International Max Planck Research School for Intelligent Systems (IMPRS-IS; Tübingen/Stuttgart 🇩🇪).
             </p>
             <!--<p>If you want to work with me as a collaborator, supervisor, instructor, or public speaker, drop me a message: <a href="mailto:mail.marvinschmitt@gmail.com"><span style='text-decoration: underline;
   text-decoration-color: #E6AA04;'>mail.marvinschmitt@gmail.com</span></a></p>-->
             
-            <p><b><span style="color:#E6AA04"">JOB MARKET:</span></b> I am looking for machine learning positions in Europe (or remote) starting in early 2026. My current interests revolve around deep learning, probabilistic ML, and ML4Science. I'm curious about new topics as well. I spend a considerable amount of my time programming in Python (JAX, PyTorch, TensorFlow, or Keras). Check out my CV (<a href="cv/index.html"><span style='text-decoration: underline;
+            <p><b><span style="color:#E6AA04"">JOB MARKET:</span></b> I am looking for machine learning positions in Europe or remote. My current interests revolve around deep learning, probabilistic machine learning, simulation intelligence, and ML4Science. I'm curious about new topics as well. I spend a considerable amount of my time programming in Python (JAX, PyTorch, TensorFlow, or Keras). Check out my CV (<a href="cv/index.html"><span style='text-decoration: underline;
   text-decoration-color: #E6AA04;'>Link</span></a>) and drop me a message if there might be a fit: <a href="mailto:mail.marvinschmitt@gmail.com"><span style='text-decoration: underline;
   text-decoration-color: #E6AA04;'>mail.marvinschmitt@gmail.com</span></a></p>
                 <!--Check out my blog to learn more about deep learning, Bayesian statistics, psychology, software engineering, and a bit of everything in between. </p>
@@ -91,6 +92,8 @@ listing:
 
 :::{#news}
 ## News
+- **April 17, 2025**: My domain (marvinschmitt.com) is down so this website has temporarily moved to the GitHub domain marvinschmitt.github.io. Things should be back to normal around end of May.
+- **March 20, 2025***: I defended my PhD ✨ This wouldn't have been possible without all the great people and networks that have been a core part of my journey. Huge thanks to my supervisors Paul Bürkner, Stefan Radev, and Aki Vehtari, to my examination committee members Steffen Staab and Mathias Niepert, to the institutions ELLIS, University of Stuttgart, and Aalto University, and to all my wonderful collaborators.
 - **November 25, 2024**: Over the past week I migrated to Bluesky and will mostly engage there instead of X/Twitter. 
 The community is growing extremely quickly, the atmosphere is friendly, and I strongly recommend checking it out.
 You can find me under the handle [@marvinschmitt.com](https://bsky.app/profile/marvinschmitt.com) {{< iconify simple-icons bluesky >}}
