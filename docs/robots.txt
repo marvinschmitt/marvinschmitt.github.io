@@ -1,1 +1,1 @@
-Sitemap: https://www.marvinschmitt.com/sitemap.xml
+Sitemap: https://marvinschmitt.github.io/sitemap.xml
